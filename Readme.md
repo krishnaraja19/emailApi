@@ -38,7 +38,7 @@ So if any changes come from the Product Owner, we can change very easily.
 
 Step 10: I have added the validation.java file for validating the mail properties. It will provide good quality applications.
 
-Step 11:
+Step 11: I have used Spring boot exception handling features. These below annotations provide the help to handle the exceptions @ControllerAdvice and @ExceptionHandler.
 
 
 
