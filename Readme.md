@@ -47,3 +47,4 @@ Step 12: I have used spring-boot-jasypt-starter jar file for password encryption
 Step 13: You can use below URL and then you will receive the response from mail-launcher.
 
 http://localhost:8083/email/simple-bulk-mail/?mailAddress=krishnaraja19@gmail.com&subject=Science&content=This is my science content&mailAddress=vidhyab11@gmail.com
+
