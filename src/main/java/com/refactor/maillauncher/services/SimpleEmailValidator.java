@@ -1,4 +1,6 @@
 package com.refactor.maillauncher.services;
+import java.util.Arrays;
+
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,39 @@ public class SimpleEmailValidator {
 			LOGGER.error("Email address is invalid: " + content.length());
 			errorMessage = emailErrorMsg;
 		}
+		if(subject == null || subject.equalsIgnoreCase("") ) {
+			LOGGER.error("Subject is invalid: " + content.length());
+			errorMessage = subjectErrorMsg;
+		
+		}
+		if(content == null || content.equalsIgnoreCase("")) {
+			LOGGER.error("Content is invalid: " + content.length());
+			errorMessage = contentErrorMsg;
+			
+		}
+		 if(content.length() > 65000) {
+				
+			 LOGGER.error("Content is too big: " + content.length());
+        	 errorMessage = contentLengthErrMsg;
+        }
+		return errorMessage;
+	}
+	
+	public String validator(String[] mailAddress,String subject,String content) {
+		String errorMessage="";
+		
+		for(String listEmailAddress:mailAddress) {
+			boolean emailAddressValid = EmailValidator.getInstance().isValid(listEmailAddress);
+			
+			
+			if(mailAddress == null || listEmailAddress.equalsIgnoreCase("") || !emailAddressValid) {
+			
+				LOGGER.error("Email address is invalid: " + content.length());
+				errorMessage = emailErrorMsg;
+			}
+		}
+		
+		
 		if(subject == null || subject.equalsIgnoreCase("") ) {
 			LOGGER.error("Subject is invalid: " + content.length());
 			errorMessage = subjectErrorMsg;

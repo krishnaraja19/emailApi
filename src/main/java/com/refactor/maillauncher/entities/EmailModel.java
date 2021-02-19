@@ -1,19 +1,13 @@
 package com.refactor.maillauncher.entities;
 
-import java.util.List;
-
-public class Email {
+public class EmailModel {
 	private String mailFrom;
 	 
-    private String mailTo;
+    private String[] mailTo;
  
     private String mailSubject;
  
     private String mailContent;
- 
-    private String contentType;
- 
-    private List < Object > attachments;
 
 	public String getMailFrom() {
 		return mailFrom;
@@ -23,11 +17,11 @@ public class Email {
 		this.mailFrom = mailFrom;
 	}
 
-	public String getMailTo() {
+	public String[] getMailTo() {
 		return mailTo;
 	}
 
-	public void setMailTo(String mailTo) {
+	public void setMailTo(String[] mailTo) {
 		this.mailTo = mailTo;
 	}
 
@@ -46,24 +40,6 @@ public class Email {
 	public void setMailContent(String mailContent) {
 		this.mailContent = mailContent;
 	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
-	public List<Object> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Object> attachments) {
-		this.attachments = attachments;
-	}
     
     
-		
-	    
 }

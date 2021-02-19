@@ -1,24 +1,20 @@
 package com.refactor.maillauncher.services;
 
-import java.io.FileNotFoundException;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
-import com.refactor.maillauncher.entities.Email;
+import com.refactor.maillauncher.entities.EmailModel;
 
 @Service
 public class EmailServiceImpl implements EmailService{
-
+	 private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
+	
 		@Autowired
 		public JavaMailSender emailSender;
 		
@@ -28,35 +24,29 @@ public class EmailServiceImpl implements EmailService{
 		@Value("${mail.response.message}")
 		String responseMessage;
 		
+		
 		@Override
-		public String sendSimpleEmail(Email email) {
-		  String errorMessage = simpleEmailValidator.validator(email.getMailTo(), email.getMailSubject(), email.getMailContent());
-		  if(errorMessage.isEmpty()) {
-			  SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-			  simpleMailMessage.setTo(email.getMailTo());
-			  simpleMailMessage.setSubject(email.getMailSubject());
-			  simpleMailMessage.setText(email.getMailContent());
+		public String sendSimpleEmail(EmailModel bulkMail) {
+			// TODO Auto-generated method stub
+			  LOGGER.info("EmailServiceImpl will start the validation process for bulk email");
+			  String errorMessage = simpleEmailValidator.validator(bulkMail.getMailTo(), bulkMail.getMailSubject(), bulkMail.getMailContent());
+			  LOGGER.info("The validation process is completed");
+			  
+			  if(errorMessage.isEmpty()) {
+		      SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+			  simpleMailMessage.setTo(bulkMail.getMailTo());
+			  simpleMailMessage.setSubject(bulkMail.getMailSubject());
+			  simpleMailMessage.setText(bulkMail.getMailContent());
 			  emailSender.send(simpleMailMessage);
+				
+			  LOGGER.info("Mails sent successfully");
 			  return responseMessage;
-		  }else {
-			  return errorMessage;
-		  }
+			  }else {
+				  LOGGER.info("The validation process is throw the error");
+				  return errorMessage;
+			  }
+		}
 		
-		 }
-		
-		public String sendEmailWithAttachment(String toAddress, String subject, String message, String attachment) throws MessagingException, FileNotFoundException {
-
-		  MimeMessage mimeMessage = emailSender.createMimeMessage();
-		  MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-		  messageHelper.setTo(toAddress);
-		  messageHelper.setSubject(subject);
-		  messageHelper.setText(message);
-		  FileSystemResource file = new FileSystemResource(ResourceUtils.getFile(attachment));
-		  messageHelper.addAttachment("Purchase Order", file);
-		  emailSender.send(mimeMessage);
-		  return "";
-		 }
-
-		
+				
 		
 }
